@@ -20,13 +20,19 @@ This is a simple GUI-based Java application to input and manage student grades. 
 
 This Java Swing application simulates a **basic stock trading environment**, allowing users to buy and sell stocks and view their portfolio.
 
-## 🚀 Features
+## Features
 
 - Display list of available stocks with company name and price
 - Perform Buy and Sell operations
 - Track user’s portfolio with quantity and total value
 - GUI built using Java Swing
 - Uses Object-Oriented Programming (OOP) principles
+
+## 🖼 Screenshot
+<img width="587" alt="image" src="https://github.com/user-attachments/assets/204028bd-05ef-466b-949b-d27445a81fef" />
+<img width="587" alt="image" src="https://github.com/user-attachments/assets/204028bd-05ef-466b-949b-d27445a81fef" />
+
+
 
 ---
 
