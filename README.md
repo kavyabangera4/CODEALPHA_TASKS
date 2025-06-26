@@ -1,4 +1,4 @@
-# Task 1 - Student Grade Tracker - Java Swing Application
+# Task 1 - Student Grade Tracker 
 
 This is a simple GUI-based Java application to input and manage student grades. It allows you to add students with marks, calculate their average, highest, and lowest scores, and display a summary report.
 
