@@ -15,9 +15,22 @@ This is a simple GUI-based Java application to input and manage student grades. 
 <img width="302" alt="image" src="https://github.com/user-attachments/assets/f6476edf-b6a9-43b3-94f6-0df7a9993cc9" />
 <img width="302" alt="image" src="https://github.com/user-attachments/assets/55d6c671-e054-42f7-98af-590c5091a86e" />
 
+---
+# Task 2 - Stock Trading Platform
 
+This Java Swing application simulates a **basic stock trading environment**, allowing users to buy and sell stocks and view their portfolio.
 
-## 🚀 How to Run
+## 🚀 Features
+
+- Display list of available stocks with company name and price
+- Perform Buy and Sell operations
+- Track user’s portfolio with quantity and total value
+- GUI built using Java Swing
+- Uses Object-Oriented Programming (OOP) principles
+
+---
+
+## 🚀 How to Run(Example Of Task 1)
 
 1. Save the file as `GradeTrackerGUI.java`.
 2. Compile the code:
