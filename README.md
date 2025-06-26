@@ -30,9 +30,7 @@ This Java Swing application simulates a **basic stock trading environment**, all
 
 ## 🖼 Screenshot
 <img width="587" alt="image" src="https://github.com/user-attachments/assets/204028bd-05ef-466b-949b-d27445a81fef" />
-<img width="587" alt="image" src="https://github.com/user-attachments/assets/204028bd-05ef-466b-949b-d27445a81fef" />
-
-
+<img width="584" alt="image" src="https://github.com/user-attachments/assets/dbaca047-d091-4094-875f-207c81f591f9" />
 
 ---
 
