@@ -2,7 +2,7 @@
 
 This is a simple GUI-based Java application to input and manage student grades. It allows you to add students with marks, calculate their average, highest, and lowest scores, and display a summary report.
 
-## 🔧 Features
+## Features
 - Add students with 3 subject marks
 - Calculate and display:
   - Average score
@@ -13,6 +13,7 @@ This is a simple GUI-based Java application to input and manage student grades. 
 ## 🖼 Screenshot
 
 <img width="302" alt="image" src="https://github.com/user-attachments/assets/f6476edf-b6a9-43b3-94f6-0df7a9993cc9" />
+<img width="302" alt="image" src="https://github.com/user-attachments/assets/9262eb10-e531-4bf1-9f35-124233b14d65" />
 
 
 ---
