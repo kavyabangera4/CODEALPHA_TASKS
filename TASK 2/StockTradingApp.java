@@ -1,9 +1,6 @@
-
-// File: StockTradingApp.java
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 
 class Stock {
@@ -41,7 +38,6 @@ public class StockTradingApp extends JFrame {
     public StockTradingApp() {
         setTitle("Stock Trading Platform");
         setSize(800, 600);
-        // setLocation(200, 100);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -58,10 +54,8 @@ public class StockTradingApp extends JFrame {
 
         JButton buyButton = new JButton("Buy");
         JButton sellButton = new JButton("Sell");
-
         bottomPanel.add(buyButton);
         bottomPanel.add(sellButton);
-
         add(bottomPanel, BorderLayout.SOUTH);
 
         // Right panel for portfolio
@@ -70,18 +64,83 @@ public class StockTradingApp extends JFrame {
         add(new JScrollPane(portfolioArea), BorderLayout.EAST);
 
         // Initialize stock list
-        initializeStocks();
-        refreshStockTable();
-
-        // Button actions
-        buyButton.addActionListener(e -> buyStock());
-        sellButton.addActionListener(e -> sellStock());
-    }
-
-    private void initializeStocks() {
         stockList.add(new Stock("TCS", 3500, 100));
         stockList.add(new Stock("Infosys", 1500, 200));
         stockList.add(new Stock("Reliance", 2800, 150));
+        refreshStockTable();
+
+        // Buy Button Action
+        buyButton.addActionListener(e -> {
+            int row = stockTable.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a stock to buy.");
+                return;
+            }
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid quantity.");
+                return;
+            }
+            Stock selectedStock = stockList.get(row);
+            if (quantity > selectedStock.availableQty) {
+                JOptionPane.showMessageDialog(this, "Not enough stock available.");
+                return;
+            }
+            selectedStock.availableQty -= quantity;
+            boolean found = false;
+            for (PortfolioItem item : portfolio) {
+                if (item.stockName.equals(selectedStock.name)) {
+                    item.quantity += quantity;
+                    item.totalValue += quantity * selectedStock.price;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                portfolio.add(new PortfolioItem(selectedStock.name, quantity, quantity * selectedStock.price));
+            }
+            refreshStockTable();
+            updatePortfolioArea();
+            quantityField.setText("");
+        });
+
+        // Sell Button Action
+        sellButton.addActionListener(e -> {
+            int row = stockTable.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a stock to sell.");
+                return;
+            }
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid quantity.");
+                return;
+            }
+            Stock selectedStock = stockList.get(row);
+            Iterator<PortfolioItem> it = portfolio.iterator();
+            while (it.hasNext()) {
+                PortfolioItem item = it.next();
+                if (item.stockName.equals(selectedStock.name)) {
+                    if (quantity > item.quantity) {
+                        JOptionPane.showMessageDialog(this, "You don’t own that much to sell.");
+                        return;
+                    }
+                    item.quantity -= quantity;
+                    item.totalValue -= quantity * selectedStock.price;
+                    selectedStock.availableQty += quantity;
+                    if (item.quantity == 0) it.remove();
+                    refreshStockTable();
+                    updatePortfolioArea();
+                    quantityField.setText("");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "You don’t own this stock.");
+        });
     }
 
     private void refreshStockTable() {
@@ -98,80 +157,7 @@ public class StockTradingApp extends JFrame {
         }
     }
 
-    private void buyStock() {
-        int row = stockTable.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a stock to buy.");
-            return;
-        }
-        int quantity;
-        try {
-            quantity = Integer.parseInt(quantityField.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid quantity.");
-            return;
-        }
-
-        Stock selectedStock = stockList.get(row);
-        if (quantity > selectedStock.availableQty) {
-            JOptionPane.showMessageDialog(this, "Not enough stock available.");
-            return;
-        }
-
-        selectedStock.availableQty -= quantity;
-        boolean found = false;
-        for (PortfolioItem item : portfolio) {
-            if (item.stockName.equals(selectedStock.name)) {
-                item.quantity += quantity;
-                item.totalValue += quantity * selectedStock.price;
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            portfolio.add(new PortfolioItem(selectedStock.name, quantity, quantity * selectedStock.price));
-        }
-
-        refreshStockTable();
-        updatePortfolioArea();
-        quantityField.setText("");
-    }
-
-    private void sellStock() {
-        int row = stockTable.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a stock to sell.");
-            return;
-        }
-        int quantity;
-        try {
-            quantity = Integer.parseInt(quantityField.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid quantity.");
-            return;
-        }
-
-        Stock selectedStock = stockList.get(row);
-        for (PortfolioItem item : portfolio) {
-            if (item.stockName.equals(selectedStock.name)) {
-                if (quantity > item.quantity) {
-                    JOptionPane.showMessageDialog(this, "You don’t own that much to sell.");
-                    return;
-                }
-                item.quantity -= quantity;
-                item.totalValue -= quantity * selectedStock.price;
-                selectedStock.availableQty += quantity;
-                if (item.quantity == 0) portfolio.remove(item);
-                refreshStockTable();
-                updatePortfolioArea();
-                quantityField.setText("");
-                return;
-            }
-        }
-        JOptionPane.showMessageDialog(this, "You don’t own this stock.");
-    }
-
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new StockTradingApp().setVisible(true));
+        new StockTradingApp().setVisible(true);
     }
 }
